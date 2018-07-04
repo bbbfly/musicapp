@@ -1,0 +1,108 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  // tap高亮 一般给透明即可
+  -webkit-tap-highlight-color: transparent;
+}
+ul,ol{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.clearfix::before,
+.clearfix::after{
+  content:'';
+  display: block;
+  line-height: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.clearfix{
+  // 移动端这里可以省略
+  zoom: 1;
+}
+
+// 根据设备计算rem  动态切换字体大小
+// <script type="text/javascript">
+// document.querySelector('html').style.fontSize = window.screen.width/20 +'px';
+
+// window.onresize = function (){
+//    document.querySelector('html').style.fontSize = window.screen.width/20 +'px';
+//   //console.log(fontSize);
+// }
+// </script>
+// 设置 高度 100%
+html,
+body {
+    height: 100%;
+    font-size: .8rem;
+}
+body{
+	font-family: sans-serif;
+}
+//自定义函数 语法
+@function p2r($size){ // px 转 rem
+  @return ($size/32)*1rem;
+}
+
+//混入 语法
+// @mixin size($width,$height){
+//   width: ($width/32)*1rem;
+//   height:($height/32)*1rem;
+// }
+
+// 一像素下边框
+@mixin bottom-border-1px($color){
+  position: relative;
+  border: none;
+  &::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $color;
+    transform: scaleY(0.5);
+  }
+}
+//1像素右边框
+@mixin right-border-1px($color){
+  position: relative;
+  border: none;
+  &::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background-color: $color;
+    transform: scaleX(0.5);
+  }
+}
+
+//根据像素比缩放1px像素边框
+@media only screen and (-webkit-device-pixel-ratio: 2 ){
+  .border-1px{
+    &::before{
+      transform :scaleY(.5);
+    }
+  }  
+}
+@media only screen and (-webkit-device-pixel-ratio: 3 ){
+  .border-1px{
+    &::before{
+      transform :scaleY(.333333);
+    }
+  }  
+}
